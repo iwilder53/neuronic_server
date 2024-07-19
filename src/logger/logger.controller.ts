@@ -1,4 +1,4 @@
-import {  DevData, DeviceDataModel } from "./logger";
+import { DevData, DeviceDataModel } from "./logger";
 import { Response, Request } from "express";
 import "@typegoose/typegoose";
 
@@ -8,22 +8,16 @@ export const postData = async (
     req: Request,
     res: Response,
 ) => {
+    console.log(req.body);
     try {
         const data = req.body;
-        
-        console.log(req.body);
-        if (!data) {
-            const { temperature, humidity } = req.body;
-            return res.status(200).send({
-            });
+        latestData = data;
+        return res.status(200).send({
+            success: true
 
-        } else {
-            console.log(data);
-            console.log()
-            return res.status(200).send({
-                success: true,
-            });
-        }
+        });
+
+
     } catch (error) {
         return res.status(200).send({
             success: false,
@@ -37,24 +31,11 @@ export const getData = async (
     res: Response,
 ) => {
     try {
-  
-        
+        return res.status(200).send({
+            success: true,
+            result: latestData
+        });
 
-        if (!latestData) {
-         
-            return res.status(200).send({
-
-                success: true,
-            });
-
-        } else {
-            console.log(latestData);
-            console.log()
-            return res.status(200).send({
-                success: true,
-                result: latestData
-            });
-        }
     } catch (error) {
         return res.status(200).send({
             success: false,
@@ -82,7 +63,7 @@ export const getDeviceStatus = async (
     res: Response,
 ) => {
     try {
-        
+
     } catch (error) {
         return res.status(200).send({
             success: false,
