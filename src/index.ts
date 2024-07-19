@@ -1,8 +1,6 @@
 import "dotenv/config";
 import express, { Application } from "express";
 import cors from "cors";
-import { mongoose } from "@typegoose/typegoose";
-import { ConnectionOptions } from "tls";
 import { env } from 'process';
 
 (async () => {
@@ -18,24 +16,6 @@ import { env } from 'process';
       parameterLimit: 50000000,
     })
   );
-
-  mongoose
-    .connect(
-      env.DB_CONNECTION_STRING as string, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      } as ConnectionOptions
-    )
-    .then(() => {
-      console.log("Connected to database!");
-    })
-    .catch((e) => {
-      console.log("Connection failed!" + e.message);
-    });
-
-  mongoose.set("debug", true);
-
-
   app.use("/api", mainRoutes);
 
 
